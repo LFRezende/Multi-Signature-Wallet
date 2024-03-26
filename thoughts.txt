@@ -1,0 +1,11 @@
+Check up de testes:
+
+1 - Testes de Construtor:
+1.1 - Lista nula de endereços -  cheque
+1.2 - Mais txConfs do que pessoas - cheque
+1.3 - Pelo menos uma confirmacao  - cheque
+1.4 - Teste de duplo endereço de entrada - cheque
+1.5 - Owners sendo appended corretamente - cheque
+
+2 - Testes de Construção de Transação
+

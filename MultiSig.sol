@@ -2,7 +2,10 @@
 pragma solidity ^0.8.0;
 
 contract MultiSigWallet {
+    // Mappings:
+
     mapping(address => bool) public doubleOwner;
+    mapping(address => bool) public isOwner;
     // Tx Definition:
     struct Tx {
         address to;
@@ -10,14 +13,12 @@ contract MultiSigWallet {
         address owner;
         bool confirmed;
         uint256 confirmations;
+        uint256 txId;
     }
 
     address payable[] public owners; // Owners of the wallet
 
-    constructor(
-        address payable[] memory _owners,
-        uint256 _initialTxChecks
-    ) payable {
+    constructor(address payable[] memory _owners, uint256 _initialTxChecks) {
         // owners = _owners; - It would be ideal for gas sake, yet to ensure no invalid owners:
 
         require(
@@ -28,18 +29,37 @@ contract MultiSigWallet {
             _owners.length > 0,
             "No address list has been passed to the constructor"
         );
+        require(_initialTxChecks >= 1, "At least one owner needs to sign it!");
 
         for (uint256 j = 0; j < _owners.length; j++) {
             address payable adm = _owners[j];
             require(adm != address(0), "Null address is invalid.");
             require(!doubleOwner[adm], "There is a double address input.");
             doubleOwner[adm] = true; // Registration of the owner
-
             owners.push(adm);
         }
     }
 
     Tx[] public txHistory;
 
-    function proposeTx() public {}
+    // Modifiers:
+
+    modifier onlyOwners() {
+        require(isOwner[msg.sender], "Not Owner - Permission Denied");
+        _;
+    }
+
+    function proposeTx(address payable _to, uint256 _value) public onlyOwners {
+        require(_to != address(0), "No burning");
+        require(_value > 0, "No transfer");
+        Tx memory proposedTx = Tx({
+            to: _to,
+            value: _value,
+            owner: msg.sender,
+            confirmed: false,
+            confirmations: 1,
+            txId: txHistory.length
+        });
+        txHistory.push(proposedTx);
+    }
 }
