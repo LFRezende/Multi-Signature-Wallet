@@ -21,7 +21,7 @@ contract MultiSigWallet {
         // owners = _owners; - It would be ideal for gas sake, yet to ensure no invalid owners:
 
         require(
-            _owners.length <= _initialTxChecks,
+            _owners.length >= _initialTxChecks,
             "There are more txConfirmations required than signers!"
         );
         require(
