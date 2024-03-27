@@ -128,4 +128,15 @@ contract MultiSigWallet {
 
         return success;
     }
+
+    function revokeConfirmation(
+        uint256 txId
+    ) public onlyOwners txNotExecuted(txId) {
+        require(
+            ownerA_confirmed_TxB[msg.sender][txId],
+            "This owner did not confirm this transaction previously"
+        );
+        txHistory[txId].confirmations -= 1;
+        ownerA_confirmed_TxB[msg.sender][txId] = false;
+    }
 }
