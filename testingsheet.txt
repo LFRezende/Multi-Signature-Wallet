@@ -1,3 +1,9 @@
+// ----- BUGS CONHECIDOS ----- //
+
+1. É possível ainda executar uma transação após a revogação de uma confirmação
+por parte de um owner.
+
+
 // ----- Check up de testes ----- //
 
 1 - Testes de Construtor:
