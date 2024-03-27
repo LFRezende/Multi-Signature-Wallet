@@ -5,7 +5,9 @@ contract MultiSigWallet {
     // Mappings:
 
     mapping(address => bool) public doubleOwner;
+    mapping(address => mapping(uint256 => bool)) public ownerA_confirmed_TxB;
     mapping(address => bool) public isOwner;
+    mapping(uint256 => bool) public txExecuted;
     // Tx Definition:
     struct Tx {
         address to;
@@ -50,6 +52,19 @@ contract MultiSigWallet {
         _;
     }
 
+    modifier notDoubleConfirms(uint256 txId) {
+        require(
+            !ownerA_confirmed_TxB[msg.sender][txId],
+            "This owner has already confirmed this transaction"
+        );
+        _;
+    }
+
+    modifier txNotExecuted(uint256 txId) {
+        require(!txExecuted[txId], "This transaction was already executed");
+        _;
+    }
+
     function proposeTx(address payable _to, uint256 _value) public onlyOwners {
         require(_to != address(0), "No burning");
         require(_value > 0, "No transfer");
@@ -61,6 +76,15 @@ contract MultiSigWallet {
             confirmations: 1,
             txId: txHistory.length
         });
+        ownerA_confirmed_TxB[msg.sender][txHistory.length] = true;
         txHistory.push(proposedTx);
+    }
+
+    // This function must not be confirmed again by the same address.
+    function confirmTx(
+        uint256 txId
+    ) public onlyOwners notDoubleConfirms(txId) txNotExecuted(txId) {
+        txHistory[txId].confirmations += 1;
+        ownerA_confirmed_TxB[msg.sender][txId] = true;
     }
 }
