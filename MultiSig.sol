@@ -13,7 +13,7 @@ contract MultiSigWallet {
         address to;
         uint256 value;
         address owner;
-        bool confirmed;
+        bool executed;
         uint256 confirmations;
         uint256 txId;
     }
@@ -72,7 +72,7 @@ contract MultiSigWallet {
             to: _to,
             value: _value,
             owner: msg.sender,
-            confirmed: false,
+            executed: false,
             confirmations: 1,
             txId: txHistory.length
         });

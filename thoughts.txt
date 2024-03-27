@@ -1,4 +1,4 @@
-Check up de testes:
+// ----- Check up de testes ----- //
 
 1 - Testes de Construtor:
 1.1 - Lista nula de endereços -  cheque
@@ -15,6 +15,9 @@ Check up de testes:
 2.5 - Não podem ser propostas transações com endereço de destino nulo.
 
 3 - Testes de Confirmação de Transação
-3.1 - Um mesmo owner não pode confirmar duas ou mais vezes uma mesma Transação
+3.1 - Um mesmo owner não pode confirmar duas ou mais vezes uma mesma Transação - cheque
 3.2 - Só se pode confirmar uma transação que não foi executada.
 
+// ----------- Discussões de Possíveis Features ------------ //
+
+1 . Uma carteira pode criar uma MultiSig da qual ela não é dona? (Acho que sim - contrato que cria multisigs)
