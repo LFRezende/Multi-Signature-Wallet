@@ -37,6 +37,7 @@ contract MultiSigWallet {
             require(!doubleOwner[adm], "There is a double address input.");
             doubleOwner[adm] = true; // Registration of the owner
             owners.push(adm);
+            isOwner[adm] = true;
         }
     }
 
