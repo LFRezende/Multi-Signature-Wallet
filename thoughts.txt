@@ -8,4 +8,13 @@ Check up de testes:
 1.5 - Owners sendo appended corretamente - cheque
 
 2 - Testes de Construção de Transação
+2.1 - Funcionamento da Função de proposição de tx
+2.2 - Cheque de confirmação automática da transação pelo owner que a propõe.
+2.3 - Somente um owner pode propor uma transação
+2.4 - Transações com zero value não podem ser propostas
+2.5 - Não podem ser propostas transações com endereço de destino nulo.
+
+3 - Testes de Confirmação de Transação
+3.1 - Um mesmo owner não pode confirmar duas ou mais vezes uma mesma Transação
+3.2 - Só se pode confirmar uma transação que não foi executada.
 
