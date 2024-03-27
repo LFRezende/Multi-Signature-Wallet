@@ -104,6 +104,10 @@ contract MultiSigWallet {
         ownerA_confirmed_TxB[msg.sender][txId] = true;
     }
 
+    function deposit() public payable {}
+
+    // For withdrawing, it is the same as an usual transaction
+
     function executeTx(
         uint256 txId
     )
