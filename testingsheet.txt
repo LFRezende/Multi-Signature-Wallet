@@ -25,6 +25,9 @@
 4.2 - Um agente externo não pode executar uma transação - cheque
 4.3 - Não se pode executar uma transação já executada - cheque
 
+5 - Testes de Revogar Confirmação de Transação
+
+6 - 
 
 // ----------- Discussões de Possíveis Features ------------ //
 

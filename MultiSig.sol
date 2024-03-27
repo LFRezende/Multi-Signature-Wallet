@@ -139,4 +139,12 @@ contract MultiSigWallet {
         txHistory[txId].confirmations -= 1;
         ownerA_confirmed_TxB[msg.sender][txId] = false;
     }
+
+    function addOwner() public onlyOwners {}
+
+    function removeOwner() public onlyOwners {}
+
+    function changeNumConfimations() public onlyOwners {}
+
+    function valueToNumConfirmations() public onlyOwners {}
 }
