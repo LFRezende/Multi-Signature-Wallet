@@ -8,6 +8,7 @@ contract MultiSigWallet {
     mapping(address => mapping(uint256 => bool)) public ownerA_confirmed_TxB;
     mapping(address => bool) public isOwner;
     mapping(uint256 => bool) public txExecuted;
+    mapping(uint256 => uint256) public numConfirmations;
     // Tx Definition:
     struct Tx {
         address to;
@@ -19,6 +20,7 @@ contract MultiSigWallet {
     }
 
     address payable[] public owners; // Owners of the wallet
+    uint256 public minTxChecks;
 
     constructor(address payable[] memory _owners, uint256 _initialTxChecks) {
         // owners = _owners; - It would be ideal for gas sake, yet to ensure no invalid owners:
@@ -41,6 +43,8 @@ contract MultiSigWallet {
             owners.push(adm);
             isOwner[adm] = true;
         }
+
+        minTxChecks = _initialTxChecks; // The initial txChecks is passed - at least this amount must be confirmed to execute.
     }
 
     Tx[] public txHistory;
@@ -65,6 +69,16 @@ contract MultiSigWallet {
         _;
     }
 
+    modifier enoughConfirmations(uint256 txId) {
+        require(
+            numConfirmations[txId] >= minTxChecks,
+            "Not enough owners have confirmed - Tx cannot execute"
+        );
+        _;
+    }
+
+    // Functions
+
     function proposeTx(address payable _to, uint256 _value) public onlyOwners {
         require(_to != address(0), "No burning");
         require(_value > 0, "No transfer");
@@ -77,6 +91,7 @@ contract MultiSigWallet {
             txId: txHistory.length
         });
         ownerA_confirmed_TxB[msg.sender][txHistory.length] = true;
+        numConfirmations[txHistory.length] += 1;
         txHistory.push(proposedTx);
     }
 
@@ -85,6 +100,28 @@ contract MultiSigWallet {
         uint256 txId
     ) public onlyOwners notDoubleConfirms(txId) txNotExecuted(txId) {
         txHistory[txId].confirmations += 1;
+        numConfirmations[txId] += 1;
         ownerA_confirmed_TxB[msg.sender][txId] = true;
+    }
+
+    function executeTx(
+        uint256 txId
+    )
+        public
+        onlyOwners
+        txNotExecuted(txId)
+        enoughConfirmations(txId)
+        returns (bool)
+    {
+        // Transfer process
+        address to = txHistory[txId].to;
+        uint256 amount = txHistory[txId].value;
+        (bool success, ) = to.call{value: amount}("");
+
+        // Neutralizing tx:
+        txHistory[txId].executed = true;
+        txExecuted[txId] = true;
+
+        return success;
     }
 }
