@@ -21,6 +21,7 @@ contract MultiSigWallet {
         // For adding/removing owners and changing the numberOfConfirmations, we need the following:
         bool changeOwners; // If yes, to becomes the to be appended or to be removed owner.
         bool add1_del0; // If change owners, then if this is true, you wish to add. Otherwise, you remove.
+        bool changeNumConfirmations; // Change the amount of confirmations required to execute Tx.
     }
 
     address payable[] public owners; // Owners of the wallet
@@ -84,11 +85,16 @@ contract MultiSigWallet {
 
     // Functions
     // The transaction proposed here is so that owner can propose to pay, to add/del owner or even to change the numConf.
+    /** AUDIT REQUIRED */
+    // Owner is able to change Num and Add/Del Owners at the same time...
+    // --> Essa construção de NULL e Zero tem problemas de interseção - é interessante impedir dupla ação.
+    /** ------------------ */
     function proposeTx(
         address payable _to,
         uint256 _value,
         bool _changeOwners,
-        bool _add1_del0
+        bool _add1_del0,
+        bool _changeNumConfirmations
     ) public onlyOwners {
         Tx memory proposedTx = Tx({
             to: _to,
@@ -98,15 +104,26 @@ contract MultiSigWallet {
             confirmations: 1,
             txId: txHistory.length,
             changeOwners: _changeOwners,
-            add1_del0: _add1_del0
+            add1_del0: _add1_del0,
+            changeNumConfirmations: _changeNumConfirmations // If active, to is null, value is numConf.
         });
-        require(_to != address(0), "No burning nor adding phantom owners.");
+        // When changing numConf, we set the to address to NULL.
+
+        /** NEEDS SOME SIGHT ON THIS TO BE SURE */
+        if (!_changeNumConfirmations) {
+            require(_to != address(0), "No burning nor adding phantom owners.");
+        } else {
+            proposedTx.to = address(0);
+            require(_value > 0, "Not zero confirmations!");
+        }
+        // When changing the Owners, we set the value to ZERO.
         if (!_changeOwners) {
             require(_value > 0, "No transfer");
         } else {
             proposedTx.value = 0;
+            require(_to != address(0), "Not adding phantom owners.");
         }
-
+        /** ^^^ -------------------- ^^^  */
         ownerA_confirmed_TxB[msg.sender][txHistory.length] = true;
         numConfirmations[txHistory.length] += 1;
         txHistory.push(proposedTx);
@@ -143,6 +160,10 @@ contract MultiSigWallet {
             }
             // require owners.length seja diferente sei la
             return true;
+        }
+        // If the to-be-executed tx wishes to change NumConfirmations
+        if (txHistory[txId].changeNumConfirmations) {
+            changeMinChecks(txHistory[txId].value);
         }
         /** -----------------  */
         // Transfer process
@@ -192,9 +213,11 @@ contract MultiSigWallet {
     }
 
     /** ---------------------- */
-    function changeNumConfimations() internal onlyOwners {}
+    function changeMinChecks(uint256 _newNumberOfConfirmations) internal {
+        minTxChecks = _newNumberOfConfirmations;
+    }
 
-    function valueToNumConfirmations() internal onlyOwners {}
+    // function valueToNumConfirmations() internal onlyOwners {}
 
     fallback() external payable {}
 

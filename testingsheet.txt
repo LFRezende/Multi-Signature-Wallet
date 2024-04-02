@@ -3,13 +3,17 @@
 1. É possível ainda executar uma transação após a revogação de uma confirmação
 por parte de um owner.
 
+2. In the PROPOSE TX function, owner is able to propose more than 1 action at the same time 
+(example: add Owner and change numConfirmations. Whilst owners could block this, it must be 
+discussed if this is valid, or even if this opens doors for potential bugs).
+
 // ------- Futuras Features ------- //
 
 1. Podemos adicionar mais donos ou remover donos conforme votação  V
 2. Podemos alterar a quantidade mínima de assinaturas a qualquer momento.
 3. O contrato paga a quantidade de gas gasta de volta aos que executaram a transação.
 4. Podemos escalar a quantidade de confirmações necessárias para cada tipo de transação (seria ainda melhor na verdade).
-
+5. Adicionar segurança para ReEntrancy Attack - é bem simples na vdd.
 
 
 // ----------- Discussões de Possíveis Features ------------ //
