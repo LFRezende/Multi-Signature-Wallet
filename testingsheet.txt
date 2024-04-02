@@ -3,6 +3,14 @@
 1. É possível ainda executar uma transação após a revogação de uma confirmação
 por parte de um owner.
 
+// ------- Futuras Features ------- //
+
+1. O contrato paga a quantidade de gas gasta de volta aos que executaram a transação.
+
+
+// ----------- Discussões de Possíveis Features ------------ //
+
+1 . Uma carteira pode criar uma MultiSig da qual ela não é dona? (Acho que sim - contrato que cria multisigs)
 
 // ----- Check up de testes ----- //
 
@@ -35,6 +43,4 @@ por parte de um owner.
 
 6 - 
 
-// ----------- Discussões de Possíveis Features ------------ //
 
-1 . Uma carteira pode criar uma MultiSig da qual ela não é dona? (Acho que sim - contrato que cria multisigs)

@@ -11,12 +11,14 @@ contract MultiSigWallet {
     mapping(uint256 => uint256) public numConfirmations;
     // Tx Definition:
     struct Tx {
-        address to;
-        uint256 value;
-        address owner;
-        bool executed;
-        uint256 confirmations;
-        uint256 txId;
+        address to; // To whom will the money be transfered
+        uint256 value; // The amount it will be transfered
+        address owner; // Who first proposed it
+        bool executed; // If the Tx was already executed
+        uint256 confirmations; // How many owners have confirmed it.
+        uint256 txId; // Current tx Id.
+        // For adding/removing owners and changing the numberOfConfirmations, we need the following:
+        bool changeOwners; // If yes, to becomes the to be appended or to be removed owner.
     }
 
     address payable[] public owners; // Owners of the wallet
@@ -79,17 +81,27 @@ contract MultiSigWallet {
 
     // Functions
 
-    function proposeTx(address payable _to, uint256 _value) public onlyOwners {
-        require(_to != address(0), "No burning");
-        require(_value > 0, "No transfer");
+    function proposeTx(
+        address payable _to,
+        uint256 _value,
+        bool _changeOwners
+    ) public onlyOwners {
         Tx memory proposedTx = Tx({
             to: _to,
             value: _value,
             owner: msg.sender,
             executed: false,
             confirmations: 1,
-            txId: txHistory.length
+            txId: txHistory.length,
+            changeOwners: _changeOwners
         });
+        require(_to != address(0), "No burning nor adding phantom owners.");
+        if (!_changeOwners) {
+            require(_value > 0, "No transfer");
+        } else {
+            proposedTx.value = 0;
+        }
+
         ownerA_confirmed_TxB[msg.sender][txHistory.length] = true;
         numConfirmations[txHistory.length] += 1;
         txHistory.push(proposedTx);
@@ -140,11 +152,19 @@ contract MultiSigWallet {
         ownerA_confirmed_TxB[msg.sender][txId] = false;
     }
 
-    function addOwner() public onlyOwners {}
+    // Functions only to be called by the own contract, in midst other functions.
+    // We wish to take advantage of the system of transactions we have in place.
+    // These functions are the sole reason of some of parameters of a transaction.
 
-    function removeOwner() public onlyOwners {}
+    function addOwner() internal onlyOwners {}
 
-    function changeNumConfimations() public onlyOwners {}
+    function removeOwner() internal onlyOwners {}
 
-    function valueToNumConfirmations() public onlyOwners {}
+    function changeNumConfimations() internal onlyOwners {}
+
+    function valueToNumConfirmations() internal onlyOwners {}
+
+    fallback() external payable {}
+
+    receive() external payable {}
 }
