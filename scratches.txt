@@ -1,0 +1,15 @@
+Scratch 1 - Remove owner function
+
+Key features to watchout:
+    1 -  Remapping of the indexes is required.
+    2 -  Owner can be in the middle.
+
+[A, B, C, D, E, F, G, H]
+ 0  1  2  3  4  5  6  7
+
+Let's remove D. Doing so equates to shifting the whole rest of the array and then popping the last one.
+[A, B, C, E, F, G, H, H]
+[A, B, C, E, F, G, H]
+ 0  1  2  3  4  5  6
+
+All of the elements before index stay the same index, all of the other decrease 1 in value.

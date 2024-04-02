@@ -5,7 +5,11 @@ por parte de um owner.
 
 // ------- Futuras Features ------- //
 
-1. O contrato paga a quantidade de gas gasta de volta aos que executaram a transação.
+1. Podemos adicionar mais donos ou remover donos conforme votação  V
+2. Podemos alterar a quantidade mínima de assinaturas a qualquer momento.
+3. O contrato paga a quantidade de gas gasta de volta aos que executaram a transação.
+4. Podemos escalar a quantidade de confirmações necessárias para cada tipo de transação (seria ainda melhor na verdade).
+
 
 
 // ----------- Discussões de Possíveis Features ------------ //

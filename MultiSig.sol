@@ -9,6 +9,7 @@ contract MultiSigWallet {
     mapping(address => bool) public isOwner;
     mapping(uint256 => bool) public txExecuted;
     mapping(uint256 => uint256) public numConfirmations;
+    mapping(address => uint256) public ownerPosition;
     // Tx Definition:
     struct Tx {
         address to; // To whom will the money be transfered
@@ -19,6 +20,7 @@ contract MultiSigWallet {
         uint256 txId; // Current tx Id.
         // For adding/removing owners and changing the numberOfConfirmations, we need the following:
         bool changeOwners; // If yes, to becomes the to be appended or to be removed owner.
+        bool add1_del0; // If change owners, then if this is true, you wish to add. Otherwise, you remove.
     }
 
     address payable[] public owners; // Owners of the wallet
@@ -42,6 +44,7 @@ contract MultiSigWallet {
             require(adm != address(0), "Null address is invalid.");
             require(!doubleOwner[adm], "There is a double address input.");
             doubleOwner[adm] = true; // Registration of the owner
+            ownerPosition[adm] = owners.length;
             owners.push(adm);
             isOwner[adm] = true;
         }
@@ -80,11 +83,12 @@ contract MultiSigWallet {
     }
 
     // Functions
-
+    // The transaction proposed here is so that owner can propose to pay, to add/del owner or even to change the numConf.
     function proposeTx(
         address payable _to,
         uint256 _value,
-        bool _changeOwners
+        bool _changeOwners,
+        bool _add1_del0
     ) public onlyOwners {
         Tx memory proposedTx = Tx({
             to: _to,
@@ -93,7 +97,8 @@ contract MultiSigWallet {
             executed: false,
             confirmations: 1,
             txId: txHistory.length,
-            changeOwners: _changeOwners
+            changeOwners: _changeOwners,
+            add1_del0: _add1_del0
         });
         require(_to != address(0), "No burning nor adding phantom owners.");
         if (!_changeOwners) {
@@ -129,6 +134,17 @@ contract MultiSigWallet {
         enoughConfirmations(txId)
         returns (bool)
     {
+        /** Needs AUDITING STILL  */
+        if (txHistory[txId].changeOwners) {
+            if (txHistory[txId].add1_del0) {
+                addOwner(txHistory[txId].to); // Pass the address we wish to append
+            } else {
+                removeOwner(txHistory[txId].to); // Pass the address we wish to delete
+            }
+            // require owners.length seja diferente sei la
+            return true;
+        }
+        /** -----------------  */
         // Transfer process
         address to = txHistory[txId].to;
         uint256 amount = txHistory[txId].value;
@@ -156,10 +172,26 @@ contract MultiSigWallet {
     // We wish to take advantage of the system of transactions we have in place.
     // These functions are the sole reason of some of parameters of a transaction.
 
-    function addOwner() internal onlyOwners {}
+    // We do not use onlyOwners modifier since only the contract calls this function.
+    /** Needs AUDITING STILL  */
+    function addOwner(address _newOwner) internal {
+        ownerPosition[_newOwner] = owners.length; // Map the position of the new owner.
+        owners.push(payable(_newOwner)); // Append new address into the list
+    }
 
-    function removeOwner() internal onlyOwners {}
+    /** ---------------------- */
+    // This here below will be tricky....
+    /** Needs AUDITING STILL  */
+    function removeOwner(address _oldOwner) internal {
+        //uint256 index = ownerPosition[_oldOwner];
+        for (uint256 j = ownerPosition[_oldOwner]; j < owners.length - 1; j++) {
+            owners[j] = owners[j + 1];
+            ownerPosition[owners[j]] = j; // Update on position for the owner.
+        }
+        owners.pop();
+    }
 
+    /** ---------------------- */
     function changeNumConfimations() internal onlyOwners {}
 
     function valueToNumConfirmations() internal onlyOwners {}
