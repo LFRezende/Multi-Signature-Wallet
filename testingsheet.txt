@@ -1,3 +1,8 @@
+// Added hardhat and some schticks //
+// Added hardhat-deploy-ethers stuff //
+
+
+
 // ----- BUGS CONHECIDOS ----- //
 
 1. É possível ainda executar uma transação após a revogação de uma confirmação
