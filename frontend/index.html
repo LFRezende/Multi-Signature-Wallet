@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla:wght@200;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Nomad Protocol</title>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="followMakers" class="icon bold">
+        <a href="https://www.makers.build/" target="_blank">Follow Makers!</a>
+      </div>
+      <div id="gitHub" class="icon bold">
+        <a href="https://github.com/LFRezende/Nomad-Protocol" target="_blank"
+          >GitHub</a
+        >
+      </div>
+      <div id="address" class="icon bold">
+        <a
+          href="https://goerli.etherscan.io/address/0x8c82b77894f9a1d7bc341af974b545e59428fa67"
+          target="_blank"
+          >Transactions</a
+        >
+      </div>
+    </div>
+    <div id="hero">
+      <label class="toGreen">Nomad</label>
+      <label class="green toWhite bold">Protocol</label>
+    </div>
+    <div id="smallerText">
+      <label class="greenHover bold">Truth</label>, deployed by
+      <label class="green bold toWhite">tech.</label>
+    </div>
+    <div id="developerAdd">
+      A blockchain-based software developed by
+      <label class="green toWhite bold">
+        <a
+          href="https://www.linkedin.com/in/luis-felipe-rezende/"
+          ,
+          target="_blank"
+          >Luis Felipe Rezende</a
+        >
+      </label>
+    </div>
+    <div class="subBody">
+      <div class="textSpace" id="connectBody">
+        Connect your <label class="greenHover">Crypto Wallet</label>
+        <div><button id="connectWallet" class="button">Connect</button></div>
+      </div>
+
+      <div id="textBox">
+        <div>
+          Write below the piece of text you wish to check if is true or false.
+        </div>
+        <input
+          id="checkText"
+          type="text"
+          placeholder="     News to be credit-checked"
+        />
+        <button id="factButton" class="button">Check</button>
+        <div id="response"></div>
+      </div>
+
+      <div id="struct"></div>
+    </div>
+    <div class="subBodyTwo">
+      <div>
+        <div>
+          Our <label class="bold" id="trustText">trustworthy</label> sources*
+        </div>
+        <div id="firstLineCredited" class="lineCredited">
+          <img
+            src="./images/cnn-logo-1-1.png"
+            alt="CNN Logo"
+            class="imgFormat"
+          />
+          <img src="./images/bbc-logo-0.png" alt="BBC Logo" class="bbcFormat" />
+        </div>
+      </div>
+      <div id="secondLineCredited" class="lineCredited">
+        <img
+          src="./images/Symbol-New-York-Times.png"
+          alt="NYTimes Logo"
+          class="imgFormat reduceToFifteenPercent"
+        />
+        <img
+          src="./images/washingtonpost_logo_icon_170226.png"
+          alt="Washington Post Logo"
+          class="imgFormat"
+        />
+      </div>
+      <div id="note">*Purely fictional for now! Just an MVP abstraction.</div>
+    </div>
+    <div id="OwnerSpace"></div>
+    <script src="./index.js" type="module"></script>
+    <script
+      src="https://cdn.plot.ly/plotly-2.20.0.min.js"
+      charset="utf-8"
+    ></script>
+  </body>
+</html>

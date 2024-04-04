@@ -16,8 +16,9 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
   const chainId = network.config.chainId;
-
-  const multiSig = await deploy("MultiSignatureWallet", {
+  // address payable[] memory _owners, uint256 _initialTxChecks
+  const args = [["0x4a6bf9d8683ff4a646e1989064ec11d559433a2d"], 1];
+  const multiSig = await deploy("MultiSigWallet", {
     from: deployer,
     args: args,
     log: true,

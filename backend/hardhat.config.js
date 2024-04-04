@@ -8,7 +8,7 @@ require("dotenv").config();
 // 2 - private key in env
 
 // Fluxogram of Project:
-// Contract --> Hardhat 
+// Contract --> Hardhat
 // Hardhat: {
 // 1. import packages: hardhat deploy, hardhat deploy npm, dotenv...
 // 2. make deploy folder with deploy files
@@ -20,7 +20,7 @@ module.exports = {
   networks: {
     goerli: {
       url: process.env.GOERLI_RPC_URL,
-      accounts: process.env.PRIVATE_KEY,
+      accounts: [process.env.PRIVATE_KEY], // yeah, put the stupid brackets...
       chainId: 5,
       blockConfirmations: 6,
     },
