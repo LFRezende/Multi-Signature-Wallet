@@ -4,6 +4,10 @@ const LOCAL_CHAIN_ID = 31337;
 //const GOERLI_CHAIN_ID = 5;
 
 let connectButton = document.getElementById("connectWallet");
+let executeTxButton = document.getElementById("executeTx");
+let revokeTxButton = document.getElementById("revokeTx");
+let confirmTxButton = document.getElementById("confirmTx");
+let proposeTxButton = document.getElementById("proposeTx");
 
 connectButton.onclick = connect;
 factButton.onclick = isFakeCheck;
@@ -22,3 +26,15 @@ async function connect() {
     console.log("No EVM-Based Wallet.");
   }
 }
+
+// Proposed if Tx is a transfer, an appendium, a removal, ...
+async function propose() {}
+
+// Confirms a proposed transaction.
+async function confirm() {}
+
+// Revokes a previous confirmation done by an account
+async function revoke() {}
+
+// Executes a transaction in line if already fully confirmed.
+async function execute() {}
