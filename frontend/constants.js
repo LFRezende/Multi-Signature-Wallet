@@ -1,6 +1,7 @@
 // Contract address needs to be change everytime the contract is redeployed/node is shut and gotten up.
-const contractAddress = 0x5fbdb2315678afecb367f032d93f642f64180aa3;
-const abi = [
+
+export const localAddress = 0x5fbdb2315678afecb367f032d93f642f64180aa3;
+export const abi = [
   {
     inputs: [
       {

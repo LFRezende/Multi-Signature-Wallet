@@ -1,0 +1,234 @@
+/* ### Detail add-ons  ###*/
+
+/* Font-Related: */
+.bold {
+    font-weight: bold;
+  }
+  
+  .underline {
+    border-bottom: 1px solid whitesmoke;
+  }
+  
+  /* Space Related :*/
+  .textSpace {
+    margin-bottom: 15px;
+  }
+  
+  .textBigSpace {
+    margin-bottom: 40px;
+  }
+  
+  /*Color Related:*/
+  .green {
+    color: #4adf86;
+  }
+  
+  .toGreen:hover {
+    transition: 0.5s;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-left: 5px solid transparent;
+  }
+  
+  .greenHover:hover {
+    color: #4adf86;
+    transition: 0.5s;
+    /* background: whitesmoke; */
+    border-radius: 10px;
+    border: 2px solid transparent;
+    padding: 5px 7px;
+  }
+  
+  .toWhite:hover {
+    color: whitesmoke;
+    transition: 0.5s;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    border-right: 5px solid transparent;
+    transition: 0.5s;
+  }
+  
+  /* ### Native Structure Styling ###*/
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  body {
+    margin: 0px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #1c1c1c;
+    font-family: "Karla", sans-serif;
+    font-size: 25px;
+    color: whitesmoke;
+  }
+  
+  /* ### Widgets Id'd ###*/
+  
+  #textBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 200px;
+  }
+  #banner {
+    background: whitesmoke;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 0px;
+    padding: 10px 10px;
+    border-bottom: 1px solid black;
+  }
+  
+  .lineCredited {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  #hero {
+    margin: 20px auto;
+    font-size: 50px;
+    font-weight: normal;
+  }
+  
+  #hero:hover {
+    color: #4adf86;
+    transition: 0.5s;
+  }
+  
+  #checkText {
+    width: 200px;
+    height: 40px;
+  }
+  
+  #connectBody {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 80px;
+  }
+  #followMakers:hover {
+    border-left: 1px solid transparent;
+    transition: 1s;
+  }
+  #github:hover {
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+    transition: 1s;
+  }
+  #address:hover {
+    border-right: 1px solid transparent;
+    transition: 1s;
+  }
+  #checkText {
+    border-radius: 20px;
+    border: 0px solid whitesmoke;
+  }
+  
+  #checkText:hover {
+    border-radius: 20px;
+    padding: 20px;
+    border: 0px solid whitesmoke;
+    transition: 1s;
+  }
+  
+  #smallerText {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  #developerAdd {
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+  #trustText:hover {
+    transition: 1s;
+    border-bottom: 1px solid transparent;
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+  
+  #note {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  #firstLineCredited {
+    margin-top: 0px;
+  }
+  
+  #response {
+    font-size: 10px;
+  }
+  
+  /* ### Widgets Classed ###*/
+  .icon {
+    color: black;
+    font-size: 20px;
+    padding: 6px 3px;
+  }
+  .icon:hover {
+    color: black;
+    background-color: whitesmoke;
+    transition: 1s;
+    font-size: 20px;
+    padding: 6px 10px;
+  }
+  
+  .subBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 320px;
+  }
+  
+  .subBodyTwo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 800px;
+    background: whitesmoke;
+    color: black;
+    width: 100%;
+    margin: 0px 0px;
+  }
+  
+  .button {
+    background: whitesmoke;
+    color: #4adf86;
+    font-weight: bold;
+    font-family: "Karla", sans-serif;
+    border: 0px solid black;
+    border-radius: 15px;
+    padding: 5px 8px;
+  }
+  
+  .button:hover {
+    margin-top: 6px;
+    margin-bottom: 8px;
+    background: #4adf86;
+    color: whitesmoke;
+    transition: 0.75s;
+    border-radius: 20px;
+    padding: 8px 15px;
+  }
+  
+  /* ### Image Format ### */
+  
+  .bbcFormat {
+    width: 30%;
+  }
+  .imgFormat {
+    width: 20%;
+  }
+  
+  .reduceToFifteenPercent {
+    width: 15%;
+  }
